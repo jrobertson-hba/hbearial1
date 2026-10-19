@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HBAerial | Enterprise Aerial Solutions & Spatial Analytics</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        hb: {
+                            dark: '#080C14',
+                            card: '#0F172A',
+                            border: '#1E293B',
+                            cyan: '#00F0FF',
+                            blue: '#2563EB',
+                            amber: '#F59E0B',
+                            emerald: '#10B981',
+                            purple: '#A855F7',
+                            slate: '#94A3B8'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #080C14;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1E293B;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00F0FF;
+        }
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-card {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card:hover {
+            border-color: rgba(0, 240, 255, 0.4);
+            box-shadow: 0 0 25px rgba(0, 240, 255, 0.15);
+            transform: translateY(-3px);
+        }
+        .grid-bg {
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        .radar-sweep {
+            position: relative;
+            overflow: hidden;
+        }
+        .radar-sweep::after {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent 0deg, transparent 300deg, rgba(0, 240, 255, 0.12) 360deg);
+            animation: rotate 7s linear infinite;
+            pointer-events: none;
+        }
+        @keyframes rotate {
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-hb-dark text-slate-100 font-sans antialiased selection:bg-hb-cyan selection:text-black grid-bg overflow-x-hidden">
+
+    <!-- Navigation Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="glass-panel rounded-2xl px-5 py-3 flex items-center justify-between shadow-2xl">
+                <!-- Brand Logo -->
+                <a href="#" class="flex items-center gap-3 group">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-hb-cyan via-blue-500 to-hb-blue flex items-center justify-center text-black font-extrabold text-xl shadow-lg shadow-hb-cyan/20 group-hover:scale-105 transition-transform">
+                        <i class="fa-solid fa-drone font-mono text-slate-950"></i>
+                    </div>
+                    <div>
+                        <span class="text-2xl font-black tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-100 to-hb-cyan">HBAerial</span>
+                        <span class="block text-[9px] font-mono tracking-widest text-hb-cyan uppercase">Aerial Solutions & Analytics</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+                    <a href="#services" class="hover:text-hb-cyan transition-colors">Services</a>
+                    <a href="#showcase" class="hover:text-hb-cyan transition-colors">Live Sensor Demo</a>
+                    <a href="#estimator" class="hover:text-hb-cyan transition-colors">Cost Estimator</a>
+                    <a href="#compliance" class="hover:text-hb-cyan transition-colors">Safety & Fleet</a>
+                    <a href="#contact" class="hover:text-hb-cyan transition-colors">Contact</a>
+                </nav>
+
+                <!-- Action Buttons -->
+                <div class="hidden sm:flex items-center gap-4">
+                    <a href="#estimator" class="text-xs font-mono px-3 py-2 rounded-lg border border-hb-cyan/30 text-hb-cyan hover:bg-hb-cyan/10 transition-colors flex items-center gap-1.5">
+                        <i class="fa-solid fa-calculator"></i>Instant Quote
+                    </a>
+                    <a href="#contact" class="px-4 py-2 rounded-xl bg-gradient-to-r from-hb-cyan to-hb-blue text-slate-950 font-bold text-sm hover:opacity-90 transition-all shadow-lg shadow-hb-cyan/20">
+                        Book Mission
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuBtn" class="md:hidden text-slate-300 hover:text-white p-2">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Drawer Menu -->
+        <div id="mobileDrawer" class="hidden md:hidden glass-panel border-t border-hb-border px-6 py-6 mx-4 rounded-2xl mt-2 flex flex-col gap-4">
+            <a href="#services" class="mobile-nav-link text-slate-200 hover:text-hb-cyan text-base py-2">Services</a>
+            <a href="#showcase" class="mobile-nav-link text-slate-200 hover:text-hb-cyan text-base py-2">Live Sensor Demo</a>
+            <a href="#estimator" class="mobile-nav-link text-slate-200 hover:text-hb-cyan text-base py-2">Cost Estimator</a>
+            <a href="#compliance" class="mobile-nav-link text-slate-200 hover:text-hb-cyan text-base py-2">Safety & Fleet</a>
+            <a href="#contact" class="mobile-nav-link text-slate-200 hover:text-hb-cyan text-base py-2">Contact</a>
+            <div class="pt-2 flex flex-col gap-3">
+                <a href="#estimator" class="text-center font-mono text-hb-cyan border border-hb-cyan/40 py-2.5 rounded-xl">Instant Estimate Calculator</a>
+                <a href="#contact" class="text-center bg-hb-cyan text-black font-bold py-2.5 rounded-xl">Book Mission</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 md:pt-44 md:pb-28 overflow-hidden">
+        <!-- Glow Orbs -->
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-hb-cyan/10 rounded-full blur-[140px] pointer-events-none"></div>
+        <div class="absolute top-1/3 right-10 w-[400px] h-[400px] bg-hb-blue/15 rounded-full blur-[120px] pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Hero Heading & Copy -->
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-panel border-hb-cyan/30 text-xs font-mono text-hb-cyan">
+                        <span class="w-2 h-2 rounded-full bg-hb-cyan animate-pulse"></span>
+                        HBAERIAL SPATIAL INTELLIGENCE & CINEMATOGRAPHY
+                    </div>
+
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-[1.1]">
+                        Precision Enterprise Aerial Operations & <span class="bg-clip-text text-transparent bg-gradient-to-r from-hb-cyan via-blue-400 to-hb-blue">High-Impact Media</span>
+                    </h1>
+
+                    <p class="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-light">
+                        Deploy radiometric thermal diagnostics, high-accuracy photogrammetry site mapping, cinematic indoor FPV fly-throughs, and real-time off-grid live broadcasts with HBAerial.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
+                        <a href="#estimator" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-hb-cyan to-hb-blue text-slate-950 font-extrabold text-base hover:shadow-lg hover:shadow-hb-cyan/30 transition-all flex items-center justify-center gap-3 group">
+                            <span>Get Instant Quote</span>
+                            <i class="fa-solid fa-arrow-right text-xs group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                        <a href="#services" class="w-full sm:w-auto px-8 py-4 rounded-xl glass-panel text-white font-semibold text-base hover:border-hb-cyan/50 hover:bg-white/5 transition-all flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-layer-group text-hb-cyan"></i>
+                            <span>View Services</span>
+                        </a>
+                    </div>
+
+                    <!-- Trust Indicators -->
+                    <div class="pt-8 grid grid-cols-2 sm:grid-cols-4 gap-4 border-t border-slate-800/80 text-center lg:text-left">
+                        <div>
+                            <div class="text-xl font-extrabold font-mono text-hb-cyan">FAA Part 107</div>
+                            <div class="text-xs text-slate-400">Licensed Remote Pilots</div>
+                        </div>
+                        <div>
+                            <div class="text-xl font-extrabold font-mono text-hb-cyan">&lt; 1cm GSD</div>
+                            <div class="text-xs text-slate-400">Sub-Centimeter Mapping</div>
+                        </div>
+                        <div>
+                            <div class="text-xl font-extrabold font-mono text-hb-cyan">100% Off-Grid</div>
+                            <div class="text-xs text-slate-400">Live Stream & Uplink</div>
+                        </div>
+                        <div>
+                            <div class="text-xl font-extrabold font-mono text-hb-cyan">$5M Insured</div>
+                            <div class="text-xs text-slate-400">Enterprise Operations</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Drone Telemetry Interactive HUD Preview -->
+                <div class="lg:col-span-5 relative">
+                    <div class="glass-panel p-4 sm:p-6 rounded-3xl border border-hb-cyan/30 shadow-2xl relative radar-sweep overflow-hidden">
+                        
+                        <!-- Telemetry Screen Header -->
+                        <div class="flex items-center justify-between pb-3 border-b border-slate-800 mb-4 text-xs font-mono text-slate-400">
+                            <div class="flex items-center gap-2">
+                                <span class="w-2.5 h-2.5 rounded-full bg-hb-emerald animate-ping"></span>
+                                <span class="text-hb-emerald font-bold">HBAERIAL TELEMETRY</span>
+                            </div>
+                            <div>BAT: 96% | 22 SAT</div>
+                            <div class="text-hb-cyan">RTK FIXED</div>
+                        </div>
+
+                        <!-- Live Aerial View Frame -->
+                        <div class="relative rounded-2xl overflow-hidden aspect-video bg-slate-900 border border-slate-700/50 group">
+                            <img id="heroImage" src="https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&w=1000&q=80" 
+                                 alt="HBAerial Drone Inspection Operations" 
+                                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                 onerror="this.src='https://placehold.co/800x450/0F172A/00F0FF?text=HBAerial+Live+Telemetry'">
+                            
+                            <!-- Telemetry Overlays -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-slate-950/30 pointer-events-none p-3.5 flex flex-col justify-between">
+                                <div class="flex justify-between items-start text-[10px] font-mono text-hb-cyan">
+                                    <div class="border-l-2 border-t-2 border-hb-cyan p-1 bg-slate-950/40">ALT: 120m AGL</div>
+                                    <div class="border-r-2 border-t-2 border-hb-cyan p-1 bg-slate-950/40">SPD: 12.8 m/s</div>
+                                </div>
+                                <div class="flex justify-between items-end text-[10px] font-mono text-hb-cyan">
+                                    <div class="border-l-2 border-b-2 border-hb-cyan p-1 bg-slate-950/40">GRID: 34.0522° N, 118.2437° W</div>
+                                    <div class="border-r-2 border-b-2 border-hb-cyan p-1 bg-slate-950/40">SENSOR: FLIR Radiometric</div>
+                                </div>
+                            </div>
+
+                            <!-- Target Reticle -->
+                            <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-50">
+                                <div class="w-16 h-16 border border-hb-cyan rounded-full flex items-center justify-center">
+                                    <div class="w-2 h-2 bg-hb-cyan rounded-full"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- System Specs Bar -->
+                        <div class="mt-4 grid grid-cols-3 gap-2 text-center text-xs font-mono">
+                            <div class="bg-slate-900/90 p-2 rounded-xl border border-slate-800">
+                                <span class="text-slate-400 block text-[10px]">PLATFORM</span>
+                                <span class="text-white font-bold">Matrice 350 RTK</span>
+                            </div>
+                            <div class="bg-slate-900/90 p-2 rounded-xl border border-slate-800">
+                                <span class="text-slate-400 block text-[10px]">ACCURACY</span>
+                                <span class="text-hb-cyan font-bold">± 0.8 cm GCP</span>
+                            </div>
+                            <div class="bg-slate-900/90 p-2 rounded-xl border border-slate-800">
+                                <span class="text-slate-400 block text-[10px]">UPLINK</span>
+                                <span class="text-hb-emerald font-bold">Starlink Direct</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Service Portfolio Section -->
+    <section id="services" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                <div class="inline-block px-3 py-1 rounded-full glass-panel border-hb-cyan/30 text-xs font-mono text-hb-cyan uppercase">
+                    Comprehensive HBAerial Capabilities
+                </div>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white">Commercial & Enterprise Services</h2>
+                <p class="text-slate-400 text-base">Designed for civil infrastructure, commercial development, media production, and critical remote response.</p>
+            </div>
+
+            <!-- Tab Switching Controls -->
+            <div class="flex justify-center mb-12">
+                <div class="glass-panel p-1.5 rounded-2xl flex flex-wrap justify-center gap-2 border-slate-800 max-w-full">
+                    <button onclick="switchServiceCategory('enterprise')" id="tab-enterprise" 
+                            class="service-tab-btn px-5 py-3 rounded-xl font-semibold text-sm transition-all flex items-center gap-2 bg-gradient-to-r from-hb-cyan to-hb-blue text-slate-950 shadow-md">
+                        <i class="fa-solid fa-building-user"></i>
+                        Enterprise Aerial Solutions
+                    </button>
+                    <button onclick="switchServiceCategory('media')" id="tab-media" 
+                            class="service-tab-btn px-5 py-3 rounded-xl font-semibold text-sm transition-all flex items-center gap-2 text-slate-300 hover:text-white hover:bg-slate-800/50">
+                        <i class="fa-solid fa-video"></i>
+                        Immersive & Commercial Media
+                    </button>
+                    <button onclick="switchServiceCategory('remote')" id="tab-remote" 
+                            class="service-tab-btn px-5 py-3 rounded-xl font-semibold text-sm transition-all flex items-center gap-2 text-slate-300 hover:text-white hover:bg-slate-800/50">
+                        <i class="fa-solid fa-tower-broadcast"></i>
+                        Remote & Live Operations
+                    </button>
+                </div>
+            </div>
+
+            <!-- CATEGORY 1: Enterprise Aerial Solutions -->
+            <div id="category-enterprise" class="service-category-panel grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Thermal Building & Utility Inspections -->
+                <div class="glass-card p-6 rounded-2xl flex flex-col justify-between group">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 text-hb-amber flex items-center justify-center text-xl font-bold group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-temperature-arrow-up"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white group-hover:text-hb-cyan transition-colors">Thermal Building & Utility Inspections</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">
+                            High-resolution radiometric thermal scans for commercial roofs, solar farms, electrical utilities, building envelope diagnostics, and emergency search and rescue operations.
+                        </p>
+                        <ul class="text-xs text-slate-300 space-y-2 font-mono">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-hb-cyan"></i> FLIR Radiometric Thermal Telemetry</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-hb-cyan"></i> Solar Cell Hotspot & Fault Detection</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-hb-cyan"></i> Roof Moisture Ingress & SAR Missions</li>
+                        </ul>
+                    </div>
+                    <div class="pt-6 border-t border-slate-800/80 mt-6 flex justify-between items-center">
+                        <span class="text-xs font-mono text-hb-cyan">FLIR Radiometric</span>
+                        <button onclick="openModal('Thermal Building & Utility Inspections')" class="text-xs font-semibold text-slate-300 hover:text-white flex items-center gap-1">
+                            Details <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Photogrammetry & Site Mapping -->
+                <div class="glass-card p-6 rounded-2xl flex flex-col justify-between group">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-hb-cyan/10 border border-hb-cyan/30 text-hb-cyan flex items-center justify-center text-xl font-bold group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-cubes-stacked"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white group-hover:text-hb-cyan transition-colors">Photogrammetry & Site Mapping</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">
+                            High-accuracy 2D orthomosaic mapping, 3D surface modeling, elevation contours, and volumetric calculations for land development, civil engineering, and resource management.
+                        </p>
+                        <ul class="text-xs text-slate-300 space-y-2 font-mono">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-hb-cyan"></i> Sub-Centimeter Ground Sampling (GSD)</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-hb-cyan"></i> Earthwork Volumetric Calculations</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-hb-cyan"></i> CAD / GIS File Compatibility</li>
+                        </ul>
+                    </div>
+                    <div class="pt-6 border-t border-slate-800/80 mt-6 flex justify-between items-center">
+                        <span class="text-xs font-mono text-hb-cyan">RTK / PPK Survey</span>
+                        <button onclick="openModal('Photogrammetry & Site Mapping')" class="text-xs font-semibold text-slate-300 hover:text-white flex items-center gap-1">
+                            Details <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Construction Progress Tracking -->
+                <div class="glass-card p-6 rounded-2xl flex flex-col justify-between group">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-hb-blue/10 border border-hb-blue/30 text-hb-blue flex items-center justify-center text-xl font-bold group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-chart-line"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white group-hover:text-hb-cyan transition-colors">Construction Progress Tracking</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">
+                            Automated, recurring aerial survey flights to monitor job site timelines, safety compliance, contractor updates, and earthwork milestones over time.
+                        </p>
+                        <ul class="text-xs text-slate-300 space-y-2 font-mono">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-hb-cyan"></i> Automated Flight Path Repeatability</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-hb-cyan"></i> Time-Lapse 4K Site Evolution</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-hb-cyan"></i> Stakeholder Cloud Portal Reports</li>
+                        </ul>
+                    </div>
+                    <div class="pt-6 border-t border-slate-800/80 mt-6 flex justify-between items-center">
+                        <span class="text-xs font-mono text-hb-cyan">Weekly / Monthly</span>
+                        <button onclick="openModal('Construction Progress Tracking')" class="text-xs font-semibold text-slate-300 hover:text-white flex items-center gap-1">
+                            Details <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CATEGORY 2: Immersive & Commercial Media -->
+            <div id="category-media" class="service-category-panel hidden grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Indoor & Outdoor FPV Fly-Throughs -->
+                <div class="glass-card p-6 rounded-2xl flex flex-col justify-between group">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/30 text-hb-purple flex items-center justify-center text-xl font-bold group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-vr-cardboard"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white group-hover:text-hb-cyan transition-colors">Indoor & Outdoor FPV Fly-Throughs</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">
+                            Captivating, continuous interior and exterior aerial video tours for commercial properties, industrial manufacturing facilities, car dealerships, and sports venues.
+                        </p>
+                        <ul class="text-xs text-slate-300 space-y-2 font-mono">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-hb-cyan"></i> Prop-Guarded CineWhoop Fleet</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-hb-cyan"></i> 4K 60FPS High Frame-Rate Cinema</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-hb-cyan"></i> Single-Take One-Shot Tours</li>
+                        </ul>
+                    </div>
+                    <div class="pt-6 border-t border-slate-800/80 mt-6 flex justify-between items-center">
+                        <span class="text-xs font-mono text-hb-cyan">CineWhoop / FPV</span>
+                        <button onclick="openModal('Indoor & Outdoor FPV Fly-Throughs')" class="text-xs font-semibold text-slate-300 hover:text-white flex items-center gap-1">
+                            Details <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Commercial Real Estate Marketing -->
+                <div class="glass-card p-6 rounded-2xl flex flex-col justify-between group">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-hb-emerald flex items-center justify-center text-xl font-bold group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-building-circle-check"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white group-hover:text-hb-cyan transition-colors">Commercial Real Estate Marketing</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">
+                            End-to-end aerial photography, high-dynamic-range interior video, and interactive 360° virtual walkthroughs for listing presentations and property marketing.
+                        </p>
+                        <ul class="text-xs text-slate-300 space-y-2 font-mono">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-hb-cyan"></i> High-Res Altitude Photography</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-hb-cyan"></i> Interactive 360° Panoramic Tours</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-hb-cyan"></i> MLS & Web Ready Branding Assets</li>
+                        </ul>
+                    </div>
+                    <div class="pt-6 border-t border-slate-800/80 mt-6 flex justify-between items-center">
+                        <span class="text-xs font-mono text-hb-cyan">4K HDR Media</span>
+                        <button onclick="openModal('Commercial Real Estate Marketing')" class="text-xs font-semibold text-slate-300 hover:text-white flex items-center gap-1">
+                            Details <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Corporate & Event Video Production -->
+                <div class="glass-card p-6 rounded-2xl flex flex-col justify-between group">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-pink-500/10 border border-pink-500/30 text-pink-400 flex items-center justify-center text-xl font-bold group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-film"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white group-hover:text-hb-cyan transition-colors">Corporate & Event Video Production</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">
+                            Cinema-grade ground videography, multi-mic wireless audio recording, synchronized aerial angles, and polished brand media creation for live events and brand stories.
+                        </p>
+                        <ul class="text-xs text-slate-300 space-y-2 font-mono">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-hb-cyan"></i> Ground & Aerial Dual Operator Setup</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-hb-cyan"></i> Professional Wireless Audio Field Recording</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-hb-cyan"></i> Color Grading & Editing Packages</li>
+                        </ul>
+                    </div>
+                    <div class="pt-6 border-t border-slate-800/80 mt-6 flex justify-between items-center">
+                        <span class="text-xs font-mono text-hb-cyan">Cinema Production</span>
+                        <button onclick="openModal('Corporate & Event Video Production')" class="text-xs font-semibold text-slate-300 hover:text-white flex items-center gap-1">
+                            Details <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CATEGORY 3: Remote & Live Operations -->
+            <div id="category-remote" class="service-category-panel hidden grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <!-- Off-Grid Live Streaming -->
+                <div class="glass-card p-6 rounded-2xl flex flex-col justify-between group">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-hb-cyan flex items-center justify-center text-xl font-bold group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-satellite-dish"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white group-hover:text-hb-cyan transition-colors">Off-Grid Live Streaming</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">
+                            High-definition live video transmission from remote locations directly to client dashboards, broadcast newsrooms, or incident command centers.
+                        </p>
+                        <ul class="text-xs text-slate-300 space-y-2 font-mono">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-hb-cyan"></i> Starlink Satellite Data Uplink</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-hb-cyan"></i> Encrypted Ultra-Low-Latency SRT/RTMP</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-hb-cyan"></i> Emergency & Live Event Readiness</li>
+                        </ul>
+                    </div>
+                    <div class="pt-6 border-t border-slate-800/80 mt-6 flex justify-between items-center">
+                        <span class="text-xs font-mono text-hb-cyan">Starlink Telemetry</span>
+                        <button onclick="openModal('Off-Grid Live Streaming')" class="text-xs font-semibold text-slate-300 hover:text-white flex items-center gap-1">
+                            Details <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Rapid On-Site Data Transfer -->
+                <div class="glass-card p-6 rounded-2xl flex flex-col justify-between group">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-orange-500/10 border border-orange-500/30 text-orange-400 flex items-center justify-center text-xl font-bold group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white group-hover:text-hb-cyan transition-colors">Rapid On-Site Data Transfer</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">
+                            Real-time edge processing and instant cloud upload capabilities for critical operational data, enabling off-site engineering teams to review files live in the field.
+                        </p>
+                        <ul class="text-xs text-slate-300 space-y-2 font-mono">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-hb-cyan"></i> On-Field Mobile Workstation Processing</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-hb-cyan"></i> High-Bandwidth Cloud Upload Node</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-hb-cyan"></i> Immediate CAD/GIS Review Capabilities</li>
+                        </ul>
+                    </div>
+                    <div class="pt-6 border-t border-slate-800/80 mt-6 flex justify-between items-center">
+                        <span class="text-xs font-mono text-hb-cyan">Field Edge Compute</span>
+                        <button onclick="openModal('Rapid On-Site Data Transfer')" class="text-xs font-semibold text-slate-300 hover:text-white flex items-center gap-1">
+                            Details <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Multi-Sensor Telemetry & Data Showcase -->
+    <section id="showcase" class="py-20 bg-slate-950/70 border-y border-slate-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Mode Switch Controls -->
+                <div class="lg:col-span-5 space-y-6">
+                    <div class="inline-block px-3 py-1 rounded-full glass-panel border-hb-cyan/30 text-xs font-mono text-hb-cyan uppercase">
+                        Interactive Sensor View
+                    </div>
+                    <h2 class="text-3xl font-extrabold text-white">Multi-Sensor Telemetry Simulator</h2>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        HBAerial drones integrate specialized payload sensors for diverse commercial tasks. Toggle below to preview real-time visual outputs across sensor modalities.
+                    </p>
+
+                    <!-- Sensor Buttons -->
+                    <div class="space-y-3 pt-2">
+                        <button onclick="updateSensorMode('thermal')" id="sensor-thermal" class="sensor-btn w-full p-4 rounded-xl glass-panel text-left flex items-center justify-between border-hb-cyan/80 bg-hb-cyan/10">
+                            <div class="flex items-center gap-3">
+                                <i class="fa-solid fa-temperature-full text-hb-amber text-lg"></i>
+                                <div>
+                                    <div class="text-sm font-bold text-white">Radiometric Thermal View</div>
+                                    <div class="text-xs text-slate-400">FLIR Boson Isotherm Telemetry</div>
+                                </div>
+                            </div>
+                            <span class="text-xs font-mono text-hb-cyan">ACTIVE</span>
+                        </button>
+
+                        <button onclick="updateSensorMode('photogrammetry')" id="sensor-photogrammetry" class="sensor-btn w-full p-4 rounded-xl glass-panel text-left flex items-center justify-between border-transparent hover:border-slate-700">
+                            <div class="flex items-center gap-3">
+                                <i class="fa-solid fa-layer-group text-hb-cyan text-lg"></i>
+                                <div>
+                                    <div class="text-sm font-bold text-white">3D Point-Cloud / Orthomosaic</div>
+                                    <div class="text-xs text-slate-400">Sub-Centimeter Site Elevation</div>
+                                </div>
+                            </div>
+                            <span class="text-xs font-mono text-slate-500">SELECT</span>
+                        </button>
+
+                        <button onclick="updateSensorMode('fpv')" id="sensor-fpv" class="sensor-btn w-full p-4 rounded-xl glass-panel text-left flex items-center justify-between border-transparent hover:border-slate-700">
+                            <div class="flex items-center gap-3">
+                                <i class="fa-solid fa-bolt text-hb-purple text-lg"></i>
+                                <div>
+                                    <div class="text-sm font-bold text-white">FPV Continuous Flight Stream</div>
+                                    <div class="text-xs text-slate-400">Low-Latency Interior Fly-Through</div>
+                                </div>
+                            </div>
+                            <span class="text-xs font-mono text-slate-500">SELECT</span>
+                        </button>
+
+                        <button onclick="updateSensorMode('media')" id="sensor-media" class="sensor-btn w-full p-4 rounded-xl glass-panel text-left flex items-center justify-between border-transparent hover:border-slate-700">
+                            <div class="flex items-center gap-3">
+                                <i class="fa-solid fa-camera text-hb-emerald text-lg"></i>
+                                <div>
+                                    <div class="text-sm font-bold text-white">4K HDR Commercial Media</div>
+                                    <div class="text-xs text-slate-400">Full-Frame Cinema Quality</div>
+                                </div>
+                            </div>
+                            <span class="text-xs font-mono text-slate-500">SELECT</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Display Viewport -->
+                <div class="lg:col-span-7">
+                    <div class="glass-panel p-4 rounded-3xl border border-hb-border relative overflow-hidden">
+                        
+                        <div class="relative aspect-[16/10] bg-slate-950 rounded-2xl overflow-hidden border border-slate-800">
+                            <img id="sensorDisplayImage" 
+                                 src="https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=1000&q=80" 
+                                 alt="HBAerial Sensor Preview" 
+                                 class="w-full h-full object-cover transition-all duration-500"
+                                 onerror="this.src='https://placehold.co/800x500/0F172A/00F0FF?text=HBAerial+Sensor+Stream'">
+
+                            <!-- Live Mode Indicators -->
+                            <div class="absolute top-4 left-4 glass-panel px-3 py-1.5 rounded-lg text-xs font-mono text-white flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-hb-cyan animate-pulse"></span>
+                                <span id="sensorTag">MODE: RADIOMETRIC THERMAL</span>
+                            </div>
+
+                            <div class="absolute bottom-4 right-4 glass-panel px-3 py-1.5 rounded-lg text-xs font-mono text-hb-cyan">
+                                <span id="sensorMetric">HEAT RANGE: 18°C - 84°C</span>
+                            </div>
+
+                            <div class="absolute bottom-4 left-4 hidden sm:block text-[11px] font-mono text-slate-300 glass-panel px-3 py-1.5 rounded-lg">
+                                <span id="sensorCoordinates">GPS: 34.0522° N | 118.2437° W</span>
+                            </div>
+                        </div>
+
+                        <!-- Data Bar Footer -->
+                        <div class="mt-4 p-4 rounded-xl bg-slate-900/90 border border-slate-800 flex flex-col sm:flex-row items-center justify-between text-xs gap-3">
+                            <div class="flex items-center gap-3">
+                                <i id="sensorIcon" class="fa-solid fa-temperature-high text-hb-cyan text-xl"></i>
+                                <div>
+                                    <div id="sensorTitle" class="font-bold text-white">FLIR Thermal Differential Active</div>
+                                    <div id="sensorDesc" class="text-slate-400 text-[11px]">Identifying structural heat loss and solar junction anomalies.</div>
+                                </div>
+                            </div>
+                            <a href="#contact" class="px-4 py-2 rounded-lg bg-hb-cyan/20 border border-hb-cyan/40 text-hb-cyan font-mono hover:bg-hb-cyan/30 transition-colors whitespace-nowrap">
+                                Request Raw Log
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Cost Estimator & Mission Calculator -->
+    <section id="estimator" class="py-24 relative">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-2xl mx-auto mb-12 space-y-3">
+                <div class="inline-block px-3 py-1 rounded-full glass-panel border-hb-cyan/30 text-xs font-mono text-hb-cyan uppercase">
+                    Interactive Mission Calculator
+                </div>
+                <h2 class="text-3xl font-extrabold text-white">Project Cost Estimator</h2>
+                <p class="text-slate-400 text-sm">Select your flight service, project footprint, recurring schedule, and specialized sensor add-ons for an immediate baseline quote.</p>
+            </div>
+
+            <div class="glass-panel p-6 sm:p-10 rounded-3xl border border-hb-cyan/20 shadow-2xl">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    
+                    <!-- Calculator Inputs -->
+                    <div class="lg:col-span-7 space-y-6">
+                        
+                        <!-- Service Type -->
+                        <div>
+                            <label class="block text-xs font-mono text-slate-300 uppercase tracking-wider mb-2">1. Select Capability</label>
+                            <select id="estService" onchange="calculateQuote()" class="w-full bg-slate-900 border border-slate-700 text-white rounded-xl px-4 py-3 text-sm focus:border-hb-cyan focus:outline-none">
+                                <option value="thermal">Thermal Building & Utility Inspection ($750 base)</option>
+                                <option value="mapping">Photogrammetry & Site Mapping ($850 base)</option>
+                                <option value="construction">Construction Progress Tracking ($650 base)</option>
+                                <option value="fpv">Indoor & Outdoor FPV Fly-Through ($900 base)</option>
+                                <option value="realestate">Commercial Real Estate Media ($600 base)</option>
+                                <option value="livestream">Off-Grid Live Streaming Mission ($1,200 base)</option>
+                            </select>
+                        </div>
+
+                        <!-- Acreage Slider -->
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <label class="text-xs font-mono text-slate-300 uppercase tracking-wider">2. Project Footprint / Size</label>
+                                <span id="acreageVal" class="text-hb-cyan font-mono font-bold text-sm">25 Acres / Units</span>
+                            </div>
+                            <input id="estAcreage" type="range" min="1" max="200" value="25" oninput="calculateQuote()" 
+                                   class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-hb-cyan">
+                            <div class="flex justify-between text-[10px] font-mono text-slate-500 mt-1">
+                                <span>1 Acre</span>
+                                <span>100 Acres</span>
+                                <span>200+ Acres</span>
+                            </div>
+                        </div>
+
+                        <!-- Frequency Radio Options -->
+                        <div>
+                            <label class="block text-xs font-mono text-slate-300 uppercase tracking-wider mb-2">3. Flight Frequency</label>
+                            <div class="grid grid-cols-3 gap-3">
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="estFreq" value="1" checked onchange="calculateQuote()" class="peer hidden">
+                                    <div class="p-3 text-center rounded-xl glass-panel border border-slate-800 text-xs font-semibold peer-checked:border-hb-cyan peer-checked:bg-hb-cyan/10 peer-checked:text-hb-cyan text-slate-300">
+                                        One-Time Mission
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="estFreq" value="0.85" onchange="calculateQuote()" class="peer hidden">
+                                    <div class="p-3 text-center rounded-xl glass-panel border border-slate-800 text-xs font-semibold peer-checked:border-hb-cyan peer-checked:bg-hb-cyan/10 peer-checked:text-hb-cyan text-slate-300">
+                                        Monthly (-15%)
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="estFreq" value="0.75" onchange="calculateQuote()" class="peer hidden">
+                                    <div class="p-3 text-center rounded-xl glass-panel border border-slate-800 text-xs font-semibold peer-checked:border-hb-cyan peer-checked:bg-hb-cyan/10 peer-checked:text-hb-cyan text-slate-300">
+                                        Weekly (-25%)
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Addons -->
+                        <div>
+                            <label class="block text-xs font-mono text-slate-300 uppercase tracking-wider mb-2">4. Mission Add-Ons</label>
+                            <div class="space-y-2">
+                                <label class="flex items-center gap-3 p-2.5 rounded-xl bg-slate-900/60 border border-slate-800 cursor-pointer text-xs text-slate-300 hover:border-slate-700">
+                                    <input id="addonRtk" type="checkbox" onchange="calculateQuote()" class="accent-hb-cyan w-4 h-4 rounded">
+                                    <span>Sub-Centimeter RTK GCP Field Ground Survey Set (+$250)</span>
+                                </label>
+                                <label class="flex items-center gap-3 p-2.5 rounded-xl bg-slate-900/60 border border-slate-800 cursor-pointer text-xs text-slate-300 hover:border-slate-700">
+                                    <input id="addonTurnaround" type="checkbox" onchange="calculateQuote()" class="accent-hb-cyan w-4 h-4 rounded">
+                                    <span>24-Hour Rush Processing & Cloud Delivery (+$350)</span>
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Calculated Total Card -->
+                    <div class="lg:col-span-5 bg-slate-900/90 p-6 rounded-2xl border border-slate-800 flex flex-col justify-between">
+                        <div class="space-y-4">
+                            <div class="text-xs font-mono text-slate-400 border-b border-slate-800 pb-3 flex justify-between">
+                                <span>HBAERIAL ESTIMATE</span>
+                                <span class="text-hb-cyan">USD TAX EXCL.</span>
+                            </div>
+
+                            <div class="space-y-2 text-xs">
+                                <div class="flex justify-between text-slate-300">
+                                    <span>Base Service Fee:</span>
+                                    <span id="summaryBase" class="font-mono text-white">$750.00</span>
+                                </div>
+                                <div class="flex justify-between text-slate-300">
+                                    <span>Footprint Scaling Fee:</span>
+                                    <span id="summaryAcreage" class="font-mono text-white">+$250.00</span>
+                                </div>
+                                <div class="flex justify-between text-slate-300">
+                                    <span>Specialized Add-Ons:</span>
+                                    <span id="summaryAddons" class="font-mono text-white">$0.00</span>
+                                </div>
+                                <div class="flex justify-between text-slate-300">
+                                    <span>Frequency Discount:</span>
+                                    <span id="summaryDiscount" class="font-mono text-hb-emerald">0%</span>
+                                </div>
+                            </div>
+
+                            <div class="pt-4 border-t border-slate-800">
+                                <div class="text-xs text-slate-400">Estimated Mission Investment</div>
+                                <div id="estTotal" class="text-4xl font-black font-mono text-hb-cyan mt-1">$1,000</div>
+                                <div class="text-[11px] text-slate-500 mt-1">*Final quote subjected to FAA LAANC airspace authorization.</div>
+                            </div>
+                        </div>
+
+                        <div class="pt-6">
+                            <button onclick="lockInQuote()" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-hb-cyan to-hb-blue text-slate-950 font-bold text-sm hover:opacity-90 transition-all shadow-lg shadow-hb-cyan/20 flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-file-signature text-xs"></i>
+                                <span>Lock In Quote & Request Flight</span>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Compliance & Safety Standards Section -->
+    <section id="compliance" class="py-16 bg-slate-950/80 border-t border-slate-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-10">
+                <span class="text-xs font-mono text-hb-cyan tracking-widest uppercase">HBAerial Enterprise Compliance & Insurance</span>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                <div class="p-5 rounded-2xl glass-panel border-slate-800/80 flex flex-col items-center justify-center gap-2">
+                    <i class="fa-solid fa-certificate text-hb-cyan text-3xl"></i>
+                    <h4 class="text-sm font-bold text-white mt-1">FAA Part 107 Certified</h4>
+                    <p class="text-slate-400 text-xs">Licensed remote pilots with twilight & LAANC airspace waivers.</p>
+                </div>
+
+                <div class="p-5 rounded-2xl glass-panel border-slate-800/80 flex flex-col items-center justify-center gap-2">
+                    <i class="fa-solid fa-shield-halved text-hb-blue text-3xl"></i>
+                    <h4 class="text-sm font-bold text-white mt-1">$5M Aviation Insurance</h4>
+                    <p class="text-slate-400 text-xs">Fully insured general aviation coverage for industrial sites.</p>
+                </div>
+
+                <div class="p-5 rounded-2xl glass-panel border-slate-800/80 flex flex-col items-center justify-center gap-2">
+                    <i class="fa-solid fa-temperature-arrow-down text-hb-amber text-3xl"></i>
+                    <h4 class="text-sm font-bold text-white mt-1">ITC Thermographer Level II</h4>
+                    <p class="text-slate-400 text-xs">Certified thermal diagnostics for utility & solar inspection.</p>
+                </div>
+
+                <div class="p-5 rounded-2xl glass-panel border-slate-800/80 flex flex-col items-center justify-center gap-2">
+                    <i class="fa-solid fa-lock text-hb-emerald text-3xl"></i>
+                    <h4 class="text-sm font-bold text-white mt-1">SOC-2 Data Security</h4>
+                    <p class="text-slate-400 text-xs">Encrypted cloud delivery pipelines and strict non-disclosure.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking & Contact Section -->
+    <section id="contact" class="py-24 relative">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="glass-panel p-8 sm:p-12 rounded-3xl border border-slate-800 shadow-2xl relative overflow-hidden">
+                <div class="text-center max-w-xl mx-auto mb-10 space-y-2">
+                    <h2 class="text-3xl font-extrabold text-white">Contact HBAerial Ops</h2>
+                    <p class="text-slate-400 text-sm">Direct flight planning and mission dispatch with our operational leads.</p>
+                </div>
+
+                <form id="contactForm" onsubmit="handleContactSubmit(event)" class="space-y-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs font-mono text-slate-300 uppercase mb-2">Full Name *</label>
+                            <input type="text" required placeholder="Jane Doe" class="w-full bg-slate-900 border border-slate-700 text-white rounded-xl px-4 py-3 text-sm focus:border-hb-cyan focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-mono text-slate-300 uppercase mb-2">Company / Organization *</label>
+                            <input type="text" required placeholder="HBAerial Enterprise Partner" class="w-full bg-slate-900 border border-slate-700 text-white rounded-xl px-4 py-3 text-sm focus:border-hb-cyan focus:outline-none">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs font-mono text-slate-300 uppercase mb-2">Work Email *</label>
+                            <input type="email" required placeholder="jane@company.com" class="w-full bg-slate-900 border border-slate-700 text-white rounded-xl px-4 py-3 text-sm focus:border-hb-cyan focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-mono text-slate-300 uppercase mb-2">Service Line *</label>
+                            <select id="contactServiceSelect" class="w-full bg-slate-900 border border-slate-700 text-white rounded-xl px-4 py-3 text-sm focus:border-hb-cyan focus:outline-none">
+                                <option>Thermal Building & Utility Inspections</option>
+                                <option>Photogrammetry & Site Mapping</option>
+                                <option>Construction Progress Tracking</option>
+                                <option>Indoor & Outdoor FPV Fly-Throughs</option>
+                                <option>Commercial Real Estate Marketing</option>
+                                <option>Corporate & Event Video Production</option>
+                                <option>Off-Grid Live Streaming</option>
+                                <option>Rapid On-Site Data Transfer</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-mono text-slate-300 uppercase mb-2">Project Location & Acreage / Details</label>
+                        <input type="text" placeholder="e.g. Los Angeles Industrial Hub, 30 Acres, High Voltage Grid" class="w-full bg-slate-900 border border-slate-700 text-white rounded-xl px-4 py-3 text-sm focus:border-hb-cyan focus:outline-none">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-mono text-slate-300 uppercase mb-2">Mission Scope & Notes</label>
+                        <textarea rows="4" placeholder="Detail any specific airspace constraints, target deliverables (.LAS, .DXF, 4K ProRes), or project timeline requirements..." class="w-full bg-slate-900 border border-slate-700 text-white rounded-xl px-4 py-3 text-sm focus:border-hb-cyan focus:outline-none"></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full py-4 rounded-xl bg-gradient-to-r from-hb-cyan to-hb-blue text-slate-950 font-extrabold text-base hover:opacity-90 transition-all shadow-lg shadow-hb-cyan/20">
+                        Dispatch Flight Request to HBAerial
+                    </button>
+                </form>
+
+                <!-- Confirmation Modal Overlay -->
+                <div id="contactSuccess" class="hidden absolute inset-0 glass-panel bg-slate-950/95 flex flex-col items-center justify-center text-center p-8 z-20 space-y-4">
+                    <div class="w-16 h-16 rounded-full bg-hb-cyan/20 text-hb-cyan flex items-center justify-center text-3xl border border-hb-cyan/50">
+                        <i class="fa-solid fa-check"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white">Mission Brief Transmitted!</h3>
+                    <p class="text-slate-300 text-sm max-w-md">Our flight ops team will evaluate local airspace authorizations and deliver a formal flight plan and timeline within 4 operational hours.</p>
+                    <button onclick="resetContactForm()" class="px-6 py-2.5 rounded-xl border border-hb-cyan/40 text-hb-cyan text-xs font-mono hover:bg-hb-cyan/10">
+                        Submit Another Inquiry
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 border-t border-slate-800 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-hb-cyan flex items-center justify-center text-black font-bold">
+                    <i class="fa-solid fa-drone"></i>
+                </div>
+                <span class="text-lg font-black text-white">HBAerial</span>
+                <span class="text-xs font-mono text-slate-500">© 2026 HBAerial Solutions Inc. All rights reserved.</span>
+            </div>
+
+            <div class="flex items-center gap-6 text-xs text-slate-400 font-mono">
+                <a href="#services" class="hover:text-hb-cyan transition-colors">Services</a>
+                <a href="#compliance" class="hover:text-hb-cyan transition-colors">Safety</a>
+                <a href="#estimator" class="hover:text-hb-cyan transition-colors">Estimator</a>
+                <a href="#contact" class="hover:text-hb-cyan transition-colors">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Service Detail Modal Window -->
+    <div id="serviceModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="glass-panel max-w-xl w-full rounded-3xl p-6 sm:p-8 border border-hb-cyan/30 shadow-2xl relative space-y-6">
+            <button onclick="closeModal()" class="absolute top-6 right-6 text-slate-400 hover:text-white p-2">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-hb-cyan/20 text-hb-cyan flex items-center justify-center font-bold">
+                    <i class="fa-solid fa-satellite"></i>
+                </div>
+                <h3 id="modalTitle" class="text-2xl font-bold text-white">Service Details</h3>
+            </div>
+
+            <p id="modalDescription" class="text-slate-300 text-sm leading-relaxed">Service payload content.</p>
+
+            <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-2">
+                <div class="text-xs font-mono text-hb-cyan">STANDARDIZED DELIVERABLES:</div>
+                <ul id="modalDeliverables" class="text-xs text-slate-300 space-y-1.5 list-disc list-inside font-mono">
+                    <!-- Dynamic Items -->
+                </ul>
+            </div>
+
+            <div class="flex justify-end gap-3 pt-2">
+                <button onclick="closeModal()" class="px-5 py-2.5 rounded-xl border border-slate-700 text-slate-300 text-xs font-mono">Close</button>
+                <a href="#contact" onclick="closeModal()" class="px-5 py-2.5 rounded-xl bg-hb-cyan text-black font-bold text-xs">Book This Service</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Logic & Scripts -->
+    <script>
+        // Service Modal Details Object
+        const serviceModalData = {
+            "Thermal Building & Utility Inspections": {
+                desc: "High-resolution radiometric thermal scans for commercial roofs, solar farms, electrical utilities, building envelope diagnostics, and emergency search and rescue (SAR) support missions.",
+                deliverables: [
+                    "FLIR Radiometric Temperature Datasets (.RJPG)",
+                    "Isothermal Roof Heat-Loss & Water Ingress Report",
+                    "Solar Panel Defective Cell Grid Location Maps",
+                    "Thermal & RGB Dual-Layer High-Res Maps"
+                ]
+            },
+            "Photogrammetry & Site Mapping": {
+                desc: "High-accuracy 2D orthomosaic mapping, 3D surface modeling, elevation contour generation, and volumetric calculations for land development, civil projects, and natural resource management.",
+                deliverables: [
+                    "GeoTIFF Sub-Centimeter Orthomosaic Map",
+                    "3D Point-Cloud Datasets (.LAS / .XYZ)",
+                    "Stockpile & Cut/Fill Volumetric Analytics",
+                    "CAD / GIS Ready Vector Layers (.DXF / .SHP)"
+                ]
+            },
+            "Construction Progress Tracking": {
+                desc: "Automated, recurring aerial survey flights to monitor job site timelines, safety compliance, contractor updates, and earthwork milestones over project life cycles.",
+                deliverables: [
+                    "Weekly/Monthly Side-by-Side Site Comparisons",
+                    "Interactive 4K Web Map Dashboard",
+                    "OSHA Safety Clearance Site Overviews",
+                    "Executive Summary PDF Reports"
+                ]
+            },
+            "Indoor & Outdoor FPV Fly-Throughs": {
+                desc: "Captivating, continuous interior and exterior aerial video tours for commercial properties, industrial facilities, auto dealerships, and event venues.",
+                deliverables: [
+                    "Single-Take 4K 60FPS CineWhoop Video Tour",
+                    "Custom Speed-Ramped Commercial Cut",
+                    "Licensed Background Audio Integration",
+                    "Social Media Multi-Format Exports (16:9 / 9:16)"
+                ]
+            },
+            "Commercial Real Estate Marketing": {
+                desc: "End-to-end aerial photography, high-dynamic-range interior video, and interactive 360° virtual walkthroughs for property developers and real estate brokerages.",
+                deliverables: [
+                    "4K HDR Altitude Stills & Property Boundaries",
+                    "Interactive 360° Cloud Virtual Tour Link",
+                    "60-Second Promotional Video Cut",
+                    "MLS Compliant Unbranded File Bundles"
+                ]
+            },
+            "Corporate & Event Video Production": {
+                desc: "Cinema-grade ground videography, multi-mic wireless audio recording, synchronized aerial angles, and polished brand media creation.",
+                deliverables: [
+                    "Dual-Operator Ground & Aerial Filming",
+                    "Isolated Multi-Track Wireless Audio Stems",
+                    "Color Graded 4K Master Video File",
+                    "Brand Motion Graphic Intro / Outro"
+                ]
+            },
+            "Off-Grid Live Streaming": {
+                desc: "High-definition live video transmission from remote locations directly to client dashboards, newsrooms, or emergency command centers via Starlink satellite links.",
+                deliverables: [
+                    "Encrypted Ultra-Low Latency SRT / RTMP Stream",
+                    "Multi-Viewer Cloud Dashboard Access",
+                    "Direct Ground Crew Voice Comms Link",
+                    "Full HD Continuous Cloud Recording"
+                ]
+            },
+            "Rapid On-Site Data Transfer": {
+                desc: "Real-time edge processing and cloud upload capabilities for critical operational data, enabling off-site engineering teams to review files live.",
+                deliverables: [
+                    "In-Field Mobile Edge Workstation Processing",
+                    "High-Speed Satellite / Cellular Upload Link",
+                    "Immediate Pre-Calculated Field Diagnostic Reports",
+                    "Secure Cloud Vault Download Link"
+                ]
+            }
+        };
+
+        // Switch Service Category Tabs
+        function switchServiceCategory(cat) {
+            document.querySelectorAll('.service-category-panel').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.service-tab-btn').forEach(btn => {
+                btn.className = "service-tab-btn px-5 py-3 rounded-xl font-semibold text-sm transition-all flex items-center gap-2 text-slate-300 hover:text-white hover:bg-slate-800/50";
+            });
+
+            document.getElementById(`category-${cat}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`tab-${cat}`);
+            activeBtn.className = "service-tab-btn px-5 py-3 rounded-xl font-semibold text-sm transition-all flex items-center gap-2 bg-gradient-to-r from-hb-cyan to-hb-blue text-slate-950 shadow-md";
+        }
+
+        // Open Service Details Modal
+        function openModal(serviceTitle) {
+            const data = serviceModalData[serviceTitle] || {
+                desc: "Full enterprise aerial deployment with certified HBAerial remote pilots.",
+                deliverables: ["4K Sensor Data", "Full GIS Reports"]
+            };
+
+            document.getElementById('modalTitle').innerText = serviceTitle;
+            document.getElementById('modalDescription').innerText = data.desc;
+            
+            const list = document.getElementById('modalDeliverables');
+            list.innerHTML = "";
+            data.deliverables.forEach(item => {
+                const li = document.createElement('li');
+                li.innerText = item;
+                list.appendChild(li);
+            });
+
+            document.getElementById('serviceModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('serviceModal').classList.add('hidden');
+        }
+
+        // Sensor Mode Switcher Data & Handler
+        const sensorDataMap = {
+            thermal: {
+                img: "https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=1000&q=80",
+                tag: "MODE: RADIOMETRIC THERMAL",
+                metric: "HEAT RANGE: 18°C - 84°C",
+                coords: "GPS: 34.0522° N | 118.2437° W",
+                icon: "fa-temperature-high text-hb-amber",
+                title: "FLIR Radiometric Thermal Telemetry",
+                desc: "Detecting building envelope heat loss, electrical faults, solar cell hot spots, and SAR signatures."
+            },
+            photogrammetry: {
+                img: "https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&w=1000&q=80",
+                tag: "MODE: 3D MESH POINT-CLOUD",
+                metric: "GSD: 0.74 cm/px",
+                coords: "ELEV: 240.5m MSL",
+                icon: "fa-layer-group text-hb-cyan",
+                title: "Sub-Centimeter Photogrammetry Model",
+                desc: "Sub-centimeter volumetric analysis, topography contours, and CAD/GIS spatial mapping."
+            },
+            fpv: {
+                img: "https://images.unsplash.com/photo-1527977966376-1c8408f9f108?auto=format&fit=crop&w=1000&q=80",
+                tag: "MODE: FPV FLY-THROUGH STREAM",
+                metric: "FPS: 60FPS @ 4K",
+                coords: "SPEED: 18.4 m/s",
+                icon: "fa-bolt text-hb-purple",
+                title: "Low-Latency FPV CineWhoop Stream",
+                desc: "Seamless single-take cinematic walkthroughs inside commercial facilities and venues."
+            },
+            media: {
+                img: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1000&q=80",
+                tag: "MODE: 4K HDR COMMERCIAL",
+                metric: "RES: 4K Cinema DLOG",
+                coords: "ASPECT: 16:9 10-bit",
+                icon: "fa-camera text-hb-emerald",
+                title: "Cinema-Grade Commercial Media",
+                desc: "Full-frame high dynamic range aerial captures for high-end commercial real estate and brand media."
+            }
+        };
+
+        function updateSensorMode(mode) {
+            const data = sensorDataMap[mode];
+            document.getElementById('sensorDisplayImage').src = data.img;
+            document.getElementById('sensorTag').innerText = data.tag;
+            document.getElementById('sensorMetric').innerText = data.metric;
+            document.getElementById('sensorCoordinates').innerText = data.coords;
+            document.getElementById('sensorIcon').className = `fa-solid ${data.icon} text-xl`;
+            document.getElementById('sensorTitle').innerText = data.title;
+            document.getElementById('sensorDesc').innerText = data.desc;
+
+            // Update Active Buttons
+            document.querySelectorAll('.sensor-btn').forEach(btn => {
+                btn.className = "sensor-btn w-full p-4 rounded-xl glass-panel text-left flex items-center justify-between border-transparent hover:border-slate-700";
+                btn.querySelector('span').innerText = "SELECT";
+                btn.querySelector('span').className = "text-xs font-mono text-slate-500";
+            });
+
+            const activeBtn = document.getElementById(`sensor-${mode}`);
+            activeBtn.className = "sensor-btn w-full p-4 rounded-xl glass-panel text-left flex items-center justify-between border-hb-cyan/80 bg-hb-cyan/10";
+            activeBtn.querySelector('span').innerText = "ACTIVE";
+            activeBtn.querySelector('span').className = "text-xs font-mono text-hb-cyan";
+        }
+
+        // Quote Calculator Logic
+        function calculateQuote() {
+            const serviceRates = {
+                thermal: 750,
+                mapping: 850,
+                construction: 650,
+                fpv: 900,
+                realestate: 600,
+                livestream: 1200
+            };
+
+            const selectedService = document.getElementById('estService').value;
+            const baseRate = serviceRates[selectedService] || 750;
+
+            const acreage = parseInt(document.getElementById('estAcreage').value);
+            document.getElementById('acreageVal').innerText = `${acreage} ${acreage > 1 ? 'Acres / Footprint Units' : 'Acre'}`;
+
+            const scaleFee = Math.round(acreage * 10);
+
+            const rtkAddon = document.getElementById('addonRtk').checked ? 250 : 0;
+            const turnaroundAddon = document.getElementById('addonTurnaround').checked ? 350 : 0;
+            const totalAddons = rtkAddon + turnaroundAddon;
+
+            const freqMultiplier = parseFloat(document.querySelector('input[name="estFreq"]:checked').value);
+
+            const discountPercentage = Math.round((1 - freqMultiplier) * 100);
+
+            const calculatedTotal = Math.round((baseRate + scaleFee + totalAddons) * freqMultiplier);
+
+            // Update DOM Summary
+            document.getElementById('summaryBase').innerText = `$${baseRate}.00`;
+            document.getElementById('summaryAcreage').innerText = `+$${scaleFee}.00`;
+            document.getElementById('summaryAddons').innerText = `$${totalAddons}.00`;
+            document.getElementById('summaryDiscount').innerText = `${discountPercentage}%`;
+            document.getElementById('estTotal').innerText = `$${calculatedTotal.toLocaleString()}`;
+        }
+
+        function lockInQuote() {
+            const total = document.getElementById('estTotal').innerText;
+            const selectElem = document.getElementById('contactServiceSelect');
+            
+            // Map calculator option to contact form
+            const serviceVal = document.getElementById('estService').value;
+            if (serviceVal === 'thermal') selectElem.selectedIndex = 0;
+            if (serviceVal === 'mapping') selectElem.selectedIndex = 1;
+            if (serviceVal === 'construction') selectElem.selectedIndex = 2;
+            if (serviceVal === 'fpv') selectElem.selectedIndex = 3;
+            if (serviceVal === 'realestate') selectElem.selectedIndex = 4;
+            if (serviceVal === 'livestream') selectElem.selectedIndex = 6;
+
+            // Scroll to contact
+            document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Contact Form Handling
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            document.getElementById('contactSuccess').classList.remove('hidden');
+        }
+
+        function resetContactForm() {
+            document.getElementById('contactForm').reset();
+            document.getElementById('contactSuccess').classList.add('hidden');
+        }
+
+        // Mobile Menu Drawer Toggle
+        document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+            const drawer = document.getElementById('mobileDrawer');
+            drawer.classList.toggle('hidden');
+        });
+
+        document.querySelectorAll('.mobile-nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('mobileDrawer').classList.add('hidden');
+            });
+        });
+
+        // Initialize Quote on Load
+        window.onload = function() {
+            calculateQuote();
+        };
+    </script>
+</body>
+</html>
