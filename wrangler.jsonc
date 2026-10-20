@@ -4,19 +4,13 @@
   "compatibility_date": "2026-10-19",
   "assets": {
     "directory": "."
-  }
-}
-
-  // Can only ever send to this one address, even if the Worker code were changed.
+  },
   "send_email": [
     { "name": "EMAIL", "destination_address": "jrobertson@hbaerial.com" }
   ],
-
   "vars": {
     "TO_EMAIL": "jrobertson@hbaerial.com",
-    // Must be an address on a domain you have set up for sending in Cloudflare Email Service.
     "FROM_EMAIL": "quotes@hbaerial.com",
-    // Every address your website is served from, comma separated, no trailing slash.
     "ALLOWED_ORIGINS": "https://hbaerial.com,https://www.hbaerial.com"
   }
 }
