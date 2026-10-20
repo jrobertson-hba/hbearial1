@@ -2,6 +2,10 @@
   "name": "hbaerial1",
   "main": "index.js",
   "compatibility_date": "2026-10-19",
+  "assets": {
+    "directory": "."
+  }
+}
 
   // Can only ever send to this one address, even if the Worker code were changed.
   "send_email": [
